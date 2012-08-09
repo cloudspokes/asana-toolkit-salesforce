@@ -1,0 +1,106 @@
+<apex:page controller="Asana_CreateTaskController" id="pg" showHeader="false">
+    
+    <style type="text/css">
+        .wpmd {
+            font-size: 13px;
+            font-family: Calibri;
+            font-style: normal;
+            font-weight: normal;
+        }
+        .messageText .messageCell {
+        	font-size: 13px;
+            font-family: Calibri;
+            font-style: normal;
+            font-weight: normal;
+            font-color:red;'
+        }
+        .bPageTitle {
+        	font-size: 16px;
+            font-family: Calibri;
+            font-style: normal;
+            font-weight: normal;
+        }
+    </style>
+    
+    <apex:sectionHeader title="Create New Task" subtitle="Create Task in Asana"/>
+    
+    <apex:form id="frm">
+
+	<apex:outputPanel styleClass="messageText" id="errors">
+		<apex:pageMessages />
+	</apex:outputPanel>
+
+    <apex:pageBlock id="pBlock">
+
+        <apex:pageBlockSection title="Select Workspace" columns="2" id="pBSWorkspace">
+
+                <apex:outputLabel value="Select Workspace" styleClass="wpmd"/>
+                <apex:selectList id="workspace" value="{!workspaceId}" size="1" styleClass="wpmd">
+                    <apex:actionSupport event="onchange" action="{!loadDetails}" reRender="pBSTask,pBSButtons,errors" status="stat"/>
+                    <apex:selectOptions value="{!workspaceInAsana}"/>
+                </apex:selectList>
+
+		<apex:outputPanel styleClass="wpmd">
+            <apex:actionStatus id="stat" startText="Loading.." stopText=""/>
+        </apex:outputPanel>
+
+        </apex:pageBlockSection>
+        
+        <apex:outputPanel id="pBSTask">
+        <apex:pageBlockSection title="Enter Task Information" columns="2" rendered="{!renderDetails}">
+
+	        <apex:outputLabel value="Task Name" styleClass="wpmd"/>
+	        <apex:inputText value="{!task.name}" styleClass="wpmd"/>
+	
+	        <apex:outputLabel value="Task Notes" styleClass="wpmd"/>
+	        <apex:inputText value="{!task.notes}" styleClass="wpmd"/>
+	
+	        <apex:outputLabel value="Task Due On" styleClass="wpmd"/>
+	        <apex:inputText value="{!task.due_on}" styleClass="wpmd"/>
+	
+	        <apex:outputLabel value="Task Assigned To" styleClass="wpmd"/>
+	        <apex:selectList id="assignee" value="{!assignee.id}" size="1" styleClass="wpmd">
+	            <apex:selectOptions value="{!usersInAsana}"/>
+	        </apex:selectList>
+	
+	        <apex:outputLabel value="Task Assignee Status" styleClass="wpmd"/>
+	        <apex:selectList id="assignee_status" value="{!task.assignee_status}" size="1" styleClass="wpmd">
+	            <apex:selectOption itemValue="Inbox" itemLabel="Inbox"/>
+	            <apex:selectOption itemValue="Inbox" itemLabel="Later"/>
+	            <apex:selectOption itemValue="Inbox" itemLabel="Today"/>
+	            <apex:selectOption itemValue="Inbox" itemLabel="Upcoming"/>
+	        </apex:selectList>
+	
+	        <apex:outputLabel value="Task Follower" styleClass="wpmd"/>
+	        <apex:selectList id="follower" value="{!follower.id}" size="1" styleClass="wpmd">
+	            <apex:selectOptions value="{!usersInAsana}"/>
+	        </apex:selectList>
+	
+	        <apex:outputLabel value="Task Completed" styleClass="wpmd"/>
+	        <apex:selectList id="completed" value="{!task.completed}" size="1" styleClass="wpmd">
+	            <apex:selectOption itemValue="True" itemLabel="True"/>
+	            <apex:selectOption itemValue="False" itemLabel="False"/>
+	        </apex:selectList>
+	
+	        <apex:outputLabel value="Project" styleClass="wpmd"/>
+	        <apex:selectList id="project" value="{!project.id}" size="1" styleClass="wpmd">
+	            <apex:selectOptions value="{!projectsInWorkspace}"/>
+	        </apex:selectList>
+	
+	        <apex:outputLabel value="Tag" styleClass="wpmd"/>
+	        <apex:selectList id="tag" value="{!tag.id}" size="1" styleClass="wpmd">
+	            <apex:selectOptions value="{!tagsInWorkspace}"/>
+	        </apex:selectList>
+
+        </apex:pageBlockSection>
+        </apex:outputPanel>
+
+        <apex:outputPanel id="pBSButtons">
+            <apex:commandButton action="{!createTask}" value="Create Task" rendered="{!renderDetails}" styleClass="wpmd"/>
+        </apex:outputPanel>
+
+    </apex:pageBlock>
+
+    </apex:form>
+
+</apex:page>

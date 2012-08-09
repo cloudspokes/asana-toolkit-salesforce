@@ -1,0 +1,10 @@
+<project name="Asana" default="deploy" basedir="." xmlns:sf="antlib:com.salesforce">
+    <property file="build.properties"/>
+    <property environment="env"/>
+    <target name="deploy">
+		<sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" runAllTests="false" deployRoot="src" maxPoll="100" pollWaitMillis="10000">
+		</sf:deploy>
+    </target>
+</project>
+
+

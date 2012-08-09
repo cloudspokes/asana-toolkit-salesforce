@@ -1,0 +1,16 @@
+<project name="Account Heat Map" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+
+    <property file="build.properties"/>
+    <property environment="env"/>
+
+	<!-- Validate the package runAllTests="true" -->
+    <target name="ValidateCoreApp">
+    <sf:deploy username="${sfDeploy.username}" password="${sfDeploy.password}" serverurl="${sfDeploy.serverurl}" deployRoot="RetrieveCoreApp" pollWaitMillis="100000" maxPoll="100" checkOnly="true" />	
+    </target>
+
+	<!-- Deploy the package -->
+    <target name="DeployCoreApp">
+	<!-- to deploy use below command  -->
+	<sf:deploy username="${sfDeploy.username}" password="${sfDeploy.password}" serverurl="${sfDeploy.serverurl}" deployRoot="RetrieveCoreApp" pollWaitMillis="100000" maxPoll="100" rollbackOnError="true"/>
+    </target>
+</project>

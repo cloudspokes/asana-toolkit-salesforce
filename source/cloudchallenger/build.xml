@@ -1,0 +1,10 @@
+<project name="AsanaToolkit" default="deployWithoutNamespace" basedir="." xmlns:sf="antlib:com.salesforce">
+    <property file="build.properties"/>
+    <property environment="env"/>
+	<target name="deployWithoutNamespace">
+	      <!-- Upload the contents of the "mypkg" package -->
+	      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" deployRoot="src">
+	      
+	      </sf:deploy>
+	</target>	
+</project>

@@ -1,0 +1,57 @@
+<apex:page controller="AsanaTaskController" tabstyle="Asana_Task__tab">
+    <style>
+        label{
+            font-weight:bold;
+        }
+    </style>
+    <apex:form >
+        <apex:sectionHeader title="Create Asana Task"/>
+        <apex:pageBlock >
+            <apex:pageMessages id="msgPanel"/>
+            
+            <apex:pageBlockSection rendered="{!(apiKey != null)}">
+                
+                <apex:outputLabel for="name" value="Task Name"></apex:outputLabel>
+                <apex:inputText value="{!name}" id="name" required="true"/>
+                
+                <apex:outputLabel for="notes" value="Task Notes"></apex:outputLabel>
+                <apex:inputTextArea value="{!notes}" id="notes"/>
+                                
+                <apex:outputLabel for="duedate" value="Due Date"></apex:outputLabel>
+                <apex:outputpanel >
+                	<apex:inputField value="{!task.ActivityDate}" id="dueDate" label="Due Date"/>
+                </apex:outputpanel>	
+                
+                <apex:outputLabel for="completed" value="Completed"></apex:outputLabel>
+                <apex:inputCheckbox value="{!completed}" id="completed"/>
+                
+                <apex:outputLabel for="workspace" value="Asana Workspace"></apex:outputLabel>
+                <apex:selectList size="1" id="workspace" value="{!selectedWorkspace}">
+                    <apex:selectOptions value="{!workspaces}"> </apex:selectOptions>
+                </apex:selectList>
+                
+                <apex:outputLabel for="assignee" value="Asana Assignee"></apex:outputLabel>
+                <apex:selectList size="1" id="assignee" value="{!selectedAssignee}">
+                    <apex:selectOptions value="{!assignee}"> </apex:selectOptions>
+                </apex:selectList>
+                
+                <apex:outputLabel for="followers" value="Followers"></apex:outputLabel>
+                <apex:selectList id="followers" value="{!selectedFollowers}" multiselect="true">
+                    <apex:selectOptions value="{!assignee}"> </apex:selectOptions>
+                </apex:selectList>
+                
+                <apex:outputLabel for="assignee_status" value="Assignee Status"></apex:outputLabel>
+                <apex:selectList size="1" id="assignee_status" value="{!assigneeStatus}">
+                    <apex:selectOption itemLabel="inbox" itemValue="inbox"/>
+                    <apex:selectOption itemLabel="later" itemValue="later"/>
+                    <apex:selectOption itemLabel="today" itemValue="today"/>
+                    <apex:selectOption itemLabel="upcoming" itemValue="upcoming"/>
+                </apex:selectList>
+               
+           </Apex:pageblockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!createTask}" value="Create Task" rendered="{!(apiKey != null)}"/>
+                </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,172 @@
+<apex:page controller="AsanaTaskDemo">
+
+<apex:form > 
+	
+    <table>
+    <tr>
+    <td>
+	    <apex:pageBlock id="step1" title="Step 1. Required">
+	    
+	    	1. Select Assigned By<br/>
+			<apex:selectList value="{!apiUserId}" size="1" onchange="apiUserWorkspacesAF();" style="width:250px !important">
+				<apex:selectOptions value="{!apiUsers}"/>
+			</apex:selectList>
+			<br/>
+			<apex:actionFunction name="apiUserWorkspacesAF" reRender="step1, step2, step3" action="{!apiUserWorkspacesPopulate}" status="apiUserWorkspacesStatus"/>
+			<apex:actionStatus id="apiUserWorkspacesStatus">
+			    <apex:facet name="start"><b>Retrieving Workspaces...</b></apex:facet>
+			</apex:actionStatus>
+			<br/><br/>
+			
+			2. Select Workspace<br/>
+			<apex:selectList value="{!apiUserWorkspaceId}" size="1" onchange="apiUserWorkspaceProjectsUsersAF();" style="width:250px !important">
+				<apex:selectOptions value="{!apiUserWorkspaces}"/>
+			</apex:selectList>
+			<br/>
+			<apex:actionFunction name="apiUserWorkspaceProjectsUsersAF" reRender="step1, step2, step3" action="{!apiUserWorkspaceProjectsUsersPopulate}" status="apiUserWorkspaceProjectsUsersStatus"/>
+			<apex:actionStatus id="apiUserWorkspaceProjectsUsersStatus">
+			    <apex:facet name="start"><b>Retrieving Projects and Users...</b></apex:facet>
+			</apex:actionStatus>
+			<br/><br/>			
+		</apex:pageBlock>
+	</td>
+	<td>
+		<apex:pageBlock id="step2" title="Step 2. Optional">
+			Project<br/>
+			<apex:selectList value="{!apiUserWorkspceProjectId}" size="1" style="width:250px !important">
+				<apex:selectOptions value="{!apiUserWorkspaceProjects}"/>
+			</apex:selectList>
+			<br/><br/>
+			
+			Assignee<br/>
+			<apex:selectList value="{!apiUserWorkspceUserId}" size="1" style="width:250px !important">
+				<apex:selectOptions value="{!apiUserWorkspaceUsers}"/>
+			</apex:selectList>
+			<br/><br/>
+			
+			Assignee Status<br/>			
+			<apex:selectList value="{!taskAssigneeStatus}" size="1" style="width:250px !important">
+				<apex:selectOption itemValue="" 		itemLabel="--Select--"/>
+				<apex:selectOption itemValue="inbox" 	itemLabel="inbox - In the inbox"/>
+				<apex:selectOption itemValue="later" 	itemLabel="later - Scheduled for later"/>
+				<apex:selectOption itemValue="today" 	itemLabel="today - Scheduled for today"/>
+				<apex:selectOption itemValue="upcoming" itemLabel="upcoming - Marked as upcoming"/>
+			</apex:selectList>
+			<br/><br/>
+			
+			Completed Status<br/>
+			<apex:selectList value="{!taskCompleted}" size="1" style="width:250px !important">
+				<apex:selectOption itemValue="" 		itemLabel="--Select--"/>
+				<apex:selectOption itemValue="false" 	itemLabel="No"/>
+				<apex:selectOption itemValue="true" 	itemLabel="Yes"/>
+			</apex:selectList>
+			<br/><br/>
+			
+			Due On<br/>
+			<apex:selectList value="{!taskDueOnMM}" size="1">
+				<apex:selectOption itemValue="" 	itemLabel="Month"/>
+				<apex:selectOption itemValue="01" 	itemLabel="Jan"/>
+				<apex:selectOption itemValue="02" 	itemLabel="Feb"/>
+				<apex:selectOption itemValue="03" 	itemLabel="Mar"/>
+				<apex:selectOption itemValue="04" 	itemLabel="Apr"/>
+				<apex:selectOption itemValue="05" 	itemLabel="May"/>
+				<apex:selectOption itemValue="06" 	itemLabel="Jun"/>
+				<apex:selectOption itemValue="07" 	itemLabel="Jul"/>
+				<apex:selectOption itemValue="08" 	itemLabel="Aug"/>
+				<apex:selectOption itemValue="09" 	itemLabel="Sep"/>
+				<apex:selectOption itemValue="10" 	itemLabel="Oct"/>
+				<apex:selectOption itemValue="11" 	itemLabel="Nov"/>
+				<apex:selectOption itemValue="12" 	itemLabel="Dec"/>			
+			</apex:selectList>
+			<apex:selectList value="{!taskDueOnDD}" size="1">
+				<apex:selectOption itemValue="" 	itemLabel="Day"/>
+				<apex:selectOption itemValue="01" 	itemLabel="01"/>
+				<apex:selectOption itemValue="02" 	itemLabel="02"/>
+				<apex:selectOption itemValue="03" 	itemLabel="03"/>
+				<apex:selectOption itemValue="04" 	itemLabel="04"/>
+				<apex:selectOption itemValue="05" 	itemLabel="05"/>
+				<apex:selectOption itemValue="06" 	itemLabel="06"/>
+				<apex:selectOption itemValue="07" 	itemLabel="07"/>
+				<apex:selectOption itemValue="08" 	itemLabel="08"/>
+				<apex:selectOption itemValue="09" 	itemLabel="09"/>
+				<apex:selectOption itemValue="10" 	itemLabel="10"/>
+				<apex:selectOption itemValue="11" 	itemLabel="11"/>
+				<apex:selectOption itemValue="12" 	itemLabel="12"/>
+				<apex:selectOption itemValue="13" 	itemLabel="13"/>
+				<apex:selectOption itemValue="14" 	itemLabel="14"/>
+				<apex:selectOption itemValue="15" 	itemLabel="15"/>
+				<apex:selectOption itemValue="16" 	itemLabel="16"/>
+				<apex:selectOption itemValue="17" 	itemLabel="17"/>
+				<apex:selectOption itemValue="18" 	itemLabel="18"/>
+				<apex:selectOption itemValue="19" 	itemLabel="19"/>
+				<apex:selectOption itemValue="20" 	itemLabel="20"/>
+				<apex:selectOption itemValue="21" 	itemLabel="21"/>
+				<apex:selectOption itemValue="22" 	itemLabel="22"/>
+				<apex:selectOption itemValue="23" 	itemLabel="23"/>
+				<apex:selectOption itemValue="24" 	itemLabel="24"/>
+				<apex:selectOption itemValue="25" 	itemLabel="25"/>
+				<apex:selectOption itemValue="26" 	itemLabel="26"/>
+				<apex:selectOption itemValue="27" 	itemLabel="27"/>
+				<apex:selectOption itemValue="28" 	itemLabel="28"/>
+				<apex:selectOption itemValue="29" 	itemLabel="29"/>
+				<apex:selectOption itemValue="30" 	itemLabel="30"/>
+				<apex:selectOption itemValue="31" 	itemLabel="31"/>
+			</apex:selectList>
+			<apex:selectList value="{!taskDueOnYYYY}" size="1">
+				<apex:selectOption itemValue="" 		itemLabel="Year"/>
+				<apex:selectOption itemValue="2012" 	itemLabel="2012"/>
+				<apex:selectOption itemValue="2013" 	itemLabel="2013"/>
+			</apex:selectList>
+			<br/><br/>
+			
+			Followers<br/>
+			<apex:selectList value="{!taskFollowers}" multiselect="true" size="3" style="width:250px !important">
+				<apex:selectOptions value="{!apiUserWorkspaceUsers}"/>
+			</apex:selectList>
+			<br/><br/>
+			
+			Task Name<br/>
+			<apex:inputText value="{!taskName}" style="width:250px !important"/>		
+			<br/><br/>
+			
+			Task Notes<br/>
+			<apex:inputTextArea value="{!taskNotes}" style="width:250px !important"/>	
+			<br/><br/>
+			
+			<apex:commandButton value="Add Task" reRender="step3" action="{!addTask}" status="addTaskStatus"/>
+	        <br/>
+	        <apex:actionStatus id="addTaskStatus">
+	            <apex:facet name="start">Adding task in Asana......</apex:facet>
+	        </apex:actionStatus>
+		</apex:pageBlock>
+	</td>
+	<td>
+		<apex:pageBlock id="step3" title="Step 3. Response">
+			<apex:pageMessages id="messages"/>
+			<br/>
+			<b>Asana Response</b>
+			<br/><br/>
+			<table>
+				<tr><td>task id</td>		<td>{!taskAdded.id}</td></tr>
+				<tr><td>assignee</td>		<td>{!taskAdded.assignee}</td></tr>
+				<tr><td>assignee_status</td><td>{!taskAdded.assignee_status}</td></tr>
+				<tr><td>created_at</td>		<td>{!taskAdded.created_at}</td></tr>
+				<tr><td>completed</td>		<td>{!taskAdded.completed}</td></tr>
+				<tr><td>completed_at</td>	<td>{!taskAdded.completed_at}</td></tr>
+				<tr><td>due_on</td>			<td>{!taskAdded.due_on}</td></tr>
+				<tr><td>followers</td>		<td>{!taskAdded.followers}</td></tr>
+				<tr><td>modified_at</td>	<td>{!taskAdded.modified_at}</td></tr>
+				<tr><td>name</td>			<td>{!taskAdded.name}</td></tr>
+				<tr><td>notes</td>			<td>{!taskAdded.notes}</td></tr>
+				<tr><td>projects</td>		<td>{!taskAdded.projects}</td></tr>
+				<tr><td>tags</td>			<td>{!taskAdded.tags}</td></tr>
+				<tr><td>workspace</td>		<td>{!taskAdded.workspace}</td></tr>
+				<tr><td>errors</td>			<td>{!taskAdded.errors}</td></tr>
+			</table>
+			
+		</apex:pageBlock>
+	</td>
+	</tr></table>
+</apex:form>
+
+</apex:page>
