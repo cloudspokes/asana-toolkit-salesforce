@@ -5,7 +5,9 @@ Create a series of custom objects, Apex classes, Visualforce page (ie a toolkit)
 Challenge Details
 -----------------
 [http://www.cloudspokes.com/challenges/1555](http://www.cloudspokes.com/challenges/1555)
+
 End date: 7/19/2012 1:29 PM
+
 Total Prize Amount: $1,250
 
 See [this blog post](http://blog.cloudspokes.com/2012/08/asana-toolkit-for-salesforce-winners.html) for an overview of the results plus video demo for all three winners.
